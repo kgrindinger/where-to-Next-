@@ -1,3 +1,13 @@
+# -------------------------------------------------
+# Travel Destination Picker
+# Author: Kerry G/ ROKRCHIK
+# Created: June 2025
+# Description: Suggests new travel destinations by 
+#              excluding visited countries
+# -------------------------------------------------
+
+
+
 import random
 import os
 
@@ -51,3 +61,7 @@ if remaining:
     print(f"\nYour next travel destination is: {next_trip}!")
 else:
     print("\nYou've visited all the countries in the list. Time to explore beyond!")
+    
+# Script written by Kerry G/rokrchik
+# Use and modify freely, but credit appreciated 😊
+
