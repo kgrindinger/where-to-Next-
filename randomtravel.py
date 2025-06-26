@@ -1,50 +1,53 @@
 import random
 import os
 
-# Predefined list of all possible travel destinations
-all_countries = ["Italy", "Denmark", "Sweden", "Norway", "Germany", "Switzerland"]
+# --- Load all countries from file ---
+all_countries_file = "all_countries.txt"
+if not os.path.exists(all_countries_file):
+    print(f"Error: '{all_countries_file}' not found.")
+    exit()
 
-# Normalize a country list to lowercase for comparison, but keep original casing for output
-def normalize(countries):
-    return [c.strip().lower() for c in countries]
+with open(all_countries_file, "r") as file:
+    all_countries = [line.strip() for line in file if line.strip()]
 
-# Load visited countries from a file, or start with an empty list
+# --- Load visited countries from file ---
 visited_file = "visited.txt"
 if os.path.exists(visited_file):
     with open(visited_file, "r") as file:
-        visited = [line.strip() for line in file.readlines()]
+        visited = [line.strip() for line in file if line.strip()]
 else:
     visited = []
 
-# Show already visited countries
+# --- Show current visited countries ---
 if visited:
     print("You've already marked these as visited:")
     print(", ".join(visited))
 else:
     print("No countries have been marked as visited yet.")
 
-# Let user add more visited countries
+# --- Add new visited countries ---
 new_input = input("Enter any additional countries you've visited (comma-separated), or press Enter to skip: ")
 if new_input:
     new_visited = [c.strip() for c in new_input.split(",")]
-    # Add only new entries
     for country in new_visited:
         if country and country not in visited:
             visited.append(country)
 
-# Save updated visited list
+# --- Save updated visited list ---
 with open(visited_file, "w") as file:
     for country in visited:
         file.write(country + "\n")
 
-# Remove visited countries from the full destination list (case-insensitive match)
-normalized_visited = normalize(visited)
-remaining = [country for country in all_countries if country.lower() not in normalized_visited]
+# --- Normalize for comparison ---
+def normalize(lst):
+    return [x.lower() for x in lst]
 
-# Recommend a new destination
+# --- Filter out visited countries from all countries ---
+remaining = [country for country in all_countries if country.lower() not in normalize(visited)]
+
+# --- Recommend a destination ---
 if remaining:
     next_trip = random.choice(remaining)
     print(f"\nYour next travel destination is: {next_trip}!")
 else:
-    print("\nYou've visited all countries in the list. Time to add more destinations!")
-
+    print("\nYou've visited all the countries in the list. Time to explore beyond!")
