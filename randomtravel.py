@@ -62,6 +62,11 @@ if remaining:
 else:
     print("\nYou've visited all the countries in the list. Time to explore beyond!")
     
+# --- Clear visited file after use ---
+with open(visited_file, 'w') as file:
+    pass  # This clears the file
+
+    
 # Script written by Kerry G/rokrchik
 # Use and modify freely, but credit appreciated 😊
 
